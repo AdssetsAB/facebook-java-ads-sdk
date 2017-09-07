@@ -55,6 +55,8 @@ public class AdPlacePageSet extends APINode {
   private String mAccountId = null;
   @SerializedName("id")
   private String mId = null;
+  @SerializedName("location_types")
+  private List<String> mLocationTypes = null;
   @SerializedName("name")
   private String mName = null;
   @SerializedName("pages_count")
@@ -96,7 +98,7 @@ public class AdPlacePageSet extends APINode {
   public static APINodeList<AdPlacePageSet> fetchByIds(List<String> ids, List<String> fields, APIContext context) throws APIException {
     return (APINodeList<AdPlacePageSet>)(
       new APIRequest<AdPlacePageSet>(context, "", "/", "GET", AdPlacePageSet.getParser())
-        .setParam("ids", String.join(",", ids))
+        .setParam("ids", APIRequest.joinStringList(ids))
         .requestFields(fields)
         .execute()
     );
@@ -258,6 +260,10 @@ public class AdPlacePageSet extends APINode {
     return mId;
   }
 
+  public List<String> getFieldLocationTypes() {
+    return mLocationTypes;
+  }
+
   public String getFieldName() {
     return mName;
   }
@@ -285,6 +291,7 @@ public class AdPlacePageSet extends APINode {
     public static final String[] FIELDS = {
       "account_id",
       "id",
+      "location_types",
       "name",
       "pages_count",
       "parent_page",
@@ -371,6 +378,13 @@ public class AdPlacePageSet extends APINode {
     }
     public APIRequestGet requestIdField (boolean value) {
       this.requestField("id", value);
+      return this;
+    }
+    public APIRequestGet requestLocationTypesField () {
+      return this.requestLocationTypesField(true);
+    }
+    public APIRequestGet requestLocationTypesField (boolean value) {
+      this.requestField("location_types", value);
       return this;
     }
     public APIRequestGet requestNameField () {
@@ -486,6 +500,25 @@ public class AdPlacePageSet extends APINode {
 
   }
 
+  public static enum EnumLocationTypes {
+      @SerializedName("recent")
+      VALUE_RECENT("recent"),
+      @SerializedName("home")
+      VALUE_HOME("home"),
+      NULL(null);
+
+      private String value;
+
+      private EnumLocationTypes(String value) {
+        this.value = value;
+      }
+
+      @Override
+      public String toString() {
+        return value;
+      }
+  }
+
 
   synchronized /*package*/ static Gson getGson() {
     if (gson != null) {
@@ -503,6 +536,7 @@ public class AdPlacePageSet extends APINode {
   public AdPlacePageSet copyFrom(AdPlacePageSet instance) {
     this.mAccountId = instance.mAccountId;
     this.mId = instance.mId;
+    this.mLocationTypes = instance.mLocationTypes;
     this.mName = instance.mName;
     this.mPagesCount = instance.mPagesCount;
     this.mParentPage = instance.mParentPage;

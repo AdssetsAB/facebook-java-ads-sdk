@@ -77,6 +77,8 @@ public class Lead extends APINode {
   private Boolean mIsOrganic = null;
   @SerializedName("post")
   private Object mPost = null;
+  @SerializedName("retailer_item_id")
+  private String mRetailerItemId = null;
   protected static Gson gson = null;
 
   Lead() {
@@ -112,7 +114,7 @@ public class Lead extends APINode {
   public static APINodeList<Lead> fetchByIds(List<String> ids, List<String> fields, APIContext context) throws APIException {
     return (APINodeList<Lead>)(
       new APIRequest<Lead>(context, "", "/", "GET", Lead.getParser())
-        .setParam("ids", String.join(",", ids))
+        .setParam("ids", APIRequest.joinStringList(ids))
         .requestFields(fields)
         .execute()
     );
@@ -318,6 +320,10 @@ public class Lead extends APINode {
     return mPost;
   }
 
+  public String getFieldRetailerItemId() {
+    return mRetailerItemId;
+  }
+
 
 
   public static class APIRequestDelete extends APIRequest<APINode> {
@@ -428,6 +434,7 @@ public class Lead extends APINode {
       "id",
       "is_organic",
       "post",
+      "retailer_item_id",
     };
 
     @Override
@@ -590,6 +597,13 @@ public class Lead extends APINode {
       this.requestField("post", value);
       return this;
     }
+    public APIRequestGet requestRetailerItemIdField () {
+      return this.requestRetailerItemIdField(true);
+    }
+    public APIRequestGet requestRetailerItemIdField (boolean value) {
+      this.requestField("retailer_item_id", value);
+      return this;
+    }
   }
 
 
@@ -620,6 +634,7 @@ public class Lead extends APINode {
     this.mId = instance.mId;
     this.mIsOrganic = instance.mIsOrganic;
     this.mPost = instance.mPost;
+    this.mRetailerItemId = instance.mRetailerItemId;
     this.context = instance.context;
     this.rawValue = instance.rawValue;
     return this;

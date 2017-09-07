@@ -98,7 +98,7 @@ public class OffsitePixel extends APINode {
   public static APINodeList<OffsitePixel> fetchByIds(List<String> ids, List<String> fields, APIContext context) throws APIException {
     return (APINodeList<OffsitePixel>)(
       new APIRequest<OffsitePixel>(context, "", "/", "GET", OffsitePixel.getParser())
-        .setParam("ids", String.join(",", ids))
+        .setParam("ids", APIRequest.joinStringList(ids))
         .requestFields(fields)
         .execute()
     );
@@ -404,6 +404,7 @@ public class OffsitePixel extends APINode {
       "age",
       "agency_client_declaration",
       "amount_spent",
+      "attribution_spec",
       "balance",
       "business",
       "business_city",
@@ -425,6 +426,7 @@ public class OffsitePixel extends APINode {
       "has_migrated_permissions",
       "id",
       "io_number",
+      "is_attribution_spec_system_default",
       "is_notifications_enabled",
       "is_personal",
       "is_prepay_account",
@@ -438,6 +440,8 @@ public class OffsitePixel extends APINode {
       "owner",
       "partner",
       "rf_spec",
+      "salesforce_invoice_group_id",
+      "show_checkout_experience",
       "spend_cap",
       "tax_id",
       "tax_id_status",
@@ -551,6 +555,13 @@ public class OffsitePixel extends APINode {
     }
     public APIRequestGetAdAccounts requestAmountSpentField (boolean value) {
       this.requestField("amount_spent", value);
+      return this;
+    }
+    public APIRequestGetAdAccounts requestAttributionSpecField () {
+      return this.requestAttributionSpecField(true);
+    }
+    public APIRequestGetAdAccounts requestAttributionSpecField (boolean value) {
+      this.requestField("attribution_spec", value);
       return this;
     }
     public APIRequestGetAdAccounts requestBalanceField () {
@@ -700,6 +711,13 @@ public class OffsitePixel extends APINode {
       this.requestField("io_number", value);
       return this;
     }
+    public APIRequestGetAdAccounts requestIsAttributionSpecSystemDefaultField () {
+      return this.requestIsAttributionSpecSystemDefaultField(true);
+    }
+    public APIRequestGetAdAccounts requestIsAttributionSpecSystemDefaultField (boolean value) {
+      this.requestField("is_attribution_spec_system_default", value);
+      return this;
+    }
     public APIRequestGetAdAccounts requestIsNotificationsEnabledField () {
       return this.requestIsNotificationsEnabledField(true);
     }
@@ -789,6 +807,20 @@ public class OffsitePixel extends APINode {
     }
     public APIRequestGetAdAccounts requestRfSpecField (boolean value) {
       this.requestField("rf_spec", value);
+      return this;
+    }
+    public APIRequestGetAdAccounts requestSalesforceInvoiceGroupIdField () {
+      return this.requestSalesforceInvoiceGroupIdField(true);
+    }
+    public APIRequestGetAdAccounts requestSalesforceInvoiceGroupIdField (boolean value) {
+      this.requestField("salesforce_invoice_group_id", value);
+      return this;
+    }
+    public APIRequestGetAdAccounts requestShowCheckoutExperienceField () {
+      return this.requestShowCheckoutExperienceField(true);
+    }
+    public APIRequestGetAdAccounts requestShowCheckoutExperienceField (boolean value) {
+      this.requestField("show_checkout_experience", value);
       return this;
     }
     public APIRequestGetAdAccounts requestSpendCapField () {

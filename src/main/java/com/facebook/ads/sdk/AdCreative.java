@@ -51,6 +51,10 @@ import com.facebook.ads.sdk.APIException.MalformedResponseException;
  *
  */
 public class AdCreative extends APINode {
+  @SerializedName("account_id")
+  private String mAccountId = null;
+  @SerializedName("actor_id")
+  private String mActorId = null;
   @SerializedName("adlabels")
   private List<AdLabel> mAdlabels = null;
   @SerializedName("applink_treatment")
@@ -97,10 +101,12 @@ public class AdCreative extends APINode {
   private Object mPlatformCustomizations = null;
   @SerializedName("product_set_id")
   private String mProductSetId = null;
-  @SerializedName("run_status")
-  private EnumRunStatus mRunStatus = null;
+  @SerializedName("status")
+  private EnumStatus mStatus = null;
   @SerializedName("template_url")
   private String mTemplateUrl = null;
+  @SerializedName("template_url_spec")
+  private Object mTemplateUrlSpec = null;
   @SerializedName("thumbnail_url")
   private String mThumbnailUrl = null;
   @SerializedName("title")
@@ -109,6 +115,8 @@ public class AdCreative extends APINode {
   private String mUrlTags = null;
   @SerializedName("use_page_actor_override")
   private Boolean mUsePageActorOverride = null;
+  @SerializedName("video_id")
+  private String mVideoId = null;
   @SerializedName("creative_id")
   private String mCreativeId = null;
   protected static Gson gson = null;
@@ -148,7 +156,7 @@ public class AdCreative extends APINode {
   public static APINodeList<AdCreative> fetchByIds(List<String> ids, List<String> fields, APIContext context) throws APIException {
     return (APINodeList<AdCreative>)(
       new APIRequest<AdCreative>(context, "", "/", "GET", AdCreative.getParser())
-        .setParam("ids", String.join(",", ids))
+        .setParam("ids", APIRequest.joinStringList(ids))
         .requestFields(fields)
         .execute()
     );
@@ -318,6 +326,24 @@ public class AdCreative extends APINode {
     return new APIRequestUpdate(this.getPrefixedId().toString(), context);
   }
 
+
+  public String getFieldAccountId() {
+    return mAccountId;
+  }
+
+  public AdCreative setFieldAccountId(String value) {
+    this.mAccountId = value;
+    return this;
+  }
+
+  public String getFieldActorId() {
+    return mActorId;
+  }
+
+  public AdCreative setFieldActorId(String value) {
+    this.mActorId = value;
+    return this;
+  }
 
   public List<AdLabel> getFieldAdlabels() {
     return mAdlabels;
@@ -542,12 +568,12 @@ public class AdCreative extends APINode {
     return this;
   }
 
-  public EnumRunStatus getFieldRunStatus() {
-    return mRunStatus;
+  public EnumStatus getFieldStatus() {
+    return mStatus;
   }
 
-  public AdCreative setFieldRunStatus(EnumRunStatus value) {
-    this.mRunStatus = value;
+  public AdCreative setFieldStatus(EnumStatus value) {
+    this.mStatus = value;
     return this;
   }
 
@@ -557,6 +583,15 @@ public class AdCreative extends APINode {
 
   public AdCreative setFieldTemplateUrl(String value) {
     this.mTemplateUrl = value;
+    return this;
+  }
+
+  public Object getFieldTemplateUrlSpec() {
+    return mTemplateUrlSpec;
+  }
+
+  public AdCreative setFieldTemplateUrlSpec(Object value) {
+    this.mTemplateUrlSpec = value;
     return this;
   }
 
@@ -593,6 +628,15 @@ public class AdCreative extends APINode {
 
   public AdCreative setFieldUsePageActorOverride(Boolean value) {
     this.mUsePageActorOverride = value;
+    return this;
+  }
+
+  public String getFieldVideoId() {
+    return mVideoId;
+  }
+
+  public AdCreative setFieldVideoId(String value) {
+    this.mVideoId = value;
     return this;
   }
 
@@ -795,13 +839,13 @@ public class AdCreative extends APINode {
     }
     public static final String[] PARAMS = {
       "ad_format",
-      "dynamic_creative_spec",
+      "end_date",
       "height",
-      "interactive",
       "locale",
       "place_page_id",
       "post",
       "product_item_ids",
+      "start_date",
       "width",
     };
 
@@ -851,12 +895,8 @@ public class AdCreative extends APINode {
       return this;
     }
 
-    public APIRequestGetPreviews setDynamicCreativeSpec (Object dynamicCreativeSpec) {
-      this.setParam("dynamic_creative_spec", dynamicCreativeSpec);
-      return this;
-    }
-    public APIRequestGetPreviews setDynamicCreativeSpec (String dynamicCreativeSpec) {
-      this.setParam("dynamic_creative_spec", dynamicCreativeSpec);
+    public APIRequestGetPreviews setEndDate (String endDate) {
+      this.setParam("end_date", endDate);
       return this;
     }
 
@@ -866,15 +906,6 @@ public class AdCreative extends APINode {
     }
     public APIRequestGetPreviews setHeight (String height) {
       this.setParam("height", height);
-      return this;
-    }
-
-    public APIRequestGetPreviews setInteractive (Boolean interactive) {
-      this.setParam("interactive", interactive);
-      return this;
-    }
-    public APIRequestGetPreviews setInteractive (String interactive) {
-      this.setParam("interactive", interactive);
       return this;
     }
 
@@ -907,6 +938,11 @@ public class AdCreative extends APINode {
     }
     public APIRequestGetPreviews setProductItemIds (String productItemIds) {
       this.setParam("product_item_ids", productItemIds);
+      return this;
+    }
+
+    public APIRequestGetPreviews setStartDate (String startDate) {
+      this.setParam("start_date", startDate);
       return this;
     }
 
@@ -975,7 +1011,7 @@ public class AdCreative extends APINode {
       "account_id",
       "adlabels",
       "name",
-      "run_status",
+      "status",
     };
 
     public static final String[] FIELDS = {
@@ -1033,12 +1069,12 @@ public class AdCreative extends APINode {
       return this;
     }
 
-    public APIRequestDelete setRunStatus (Long runStatus) {
-      this.setParam("run_status", runStatus);
+    public APIRequestDelete setStatus (AdCreative.EnumStatus status) {
+      this.setParam("status", status);
       return this;
     }
-    public APIRequestDelete setRunStatus (String runStatus) {
-      this.setParam("run_status", runStatus);
+    public APIRequestDelete setStatus (String status) {
+      this.setParam("status", status);
       return this;
     }
 
@@ -1093,6 +1129,8 @@ public class AdCreative extends APINode {
     };
 
     public static final String[] FIELDS = {
+      "account_id",
+      "actor_id",
       "adlabels",
       "applink_treatment",
       "body",
@@ -1116,12 +1154,14 @@ public class AdCreative extends APINode {
       "object_url",
       "platform_customizations",
       "product_set_id",
-      "run_status",
+      "status",
       "template_url",
+      "template_url_spec",
       "thumbnail_url",
       "title",
       "url_tags",
       "use_page_actor_override",
+      "video_id",
     };
 
     @Override
@@ -1211,6 +1251,20 @@ public class AdCreative extends APINode {
       return this;
     }
 
+    public APIRequestGet requestAccountIdField () {
+      return this.requestAccountIdField(true);
+    }
+    public APIRequestGet requestAccountIdField (boolean value) {
+      this.requestField("account_id", value);
+      return this;
+    }
+    public APIRequestGet requestActorIdField () {
+      return this.requestActorIdField(true);
+    }
+    public APIRequestGet requestActorIdField (boolean value) {
+      this.requestField("actor_id", value);
+      return this;
+    }
     public APIRequestGet requestAdlabelsField () {
       return this.requestAdlabelsField(true);
     }
@@ -1372,11 +1426,11 @@ public class AdCreative extends APINode {
       this.requestField("product_set_id", value);
       return this;
     }
-    public APIRequestGet requestRunStatusField () {
-      return this.requestRunStatusField(true);
+    public APIRequestGet requestStatusField () {
+      return this.requestStatusField(true);
     }
-    public APIRequestGet requestRunStatusField (boolean value) {
-      this.requestField("run_status", value);
+    public APIRequestGet requestStatusField (boolean value) {
+      this.requestField("status", value);
       return this;
     }
     public APIRequestGet requestTemplateUrlField () {
@@ -1384,6 +1438,13 @@ public class AdCreative extends APINode {
     }
     public APIRequestGet requestTemplateUrlField (boolean value) {
       this.requestField("template_url", value);
+      return this;
+    }
+    public APIRequestGet requestTemplateUrlSpecField () {
+      return this.requestTemplateUrlSpecField(true);
+    }
+    public APIRequestGet requestTemplateUrlSpecField (boolean value) {
+      this.requestField("template_url_spec", value);
       return this;
     }
     public APIRequestGet requestThumbnailUrlField () {
@@ -1414,6 +1475,13 @@ public class AdCreative extends APINode {
       this.requestField("use_page_actor_override", value);
       return this;
     }
+    public APIRequestGet requestVideoIdField () {
+      return this.requestVideoIdField(true);
+    }
+    public APIRequestGet requestVideoIdField (boolean value) {
+      this.requestField("video_id", value);
+      return this;
+    }
   }
 
   public static class APIRequestUpdate extends APIRequest<AdCreative> {
@@ -1427,7 +1495,7 @@ public class AdCreative extends APINode {
       "account_id",
       "adlabels",
       "name",
-      "run_status",
+      "status",
     };
 
     public static final String[] FIELDS = {
@@ -1485,12 +1553,12 @@ public class AdCreative extends APINode {
       return this;
     }
 
-    public APIRequestUpdate setRunStatus (Long runStatus) {
-      this.setParam("run_status", runStatus);
+    public APIRequestUpdate setStatus (AdCreative.EnumStatus status) {
+      this.setParam("status", status);
       return this;
     }
-    public APIRequestUpdate setRunStatus (String runStatus) {
-      this.setParam("run_status", runStatus);
+    public APIRequestUpdate setStatus (String status) {
+      this.setParam("status", status);
       return this;
     }
 
@@ -1586,6 +1654,8 @@ public class AdCreative extends APINode {
       VALUE_NO_BUTTON("NO_BUTTON"),
       @SerializedName("CALL_NOW")
       VALUE_CALL_NOW("CALL_NOW"),
+      @SerializedName("APPLY_NOW")
+      VALUE_APPLY_NOW("APPLY_NOW"),
       @SerializedName("BUY_NOW")
       VALUE_BUY_NOW("BUY_NOW"),
       @SerializedName("GET_OFFER")
@@ -1596,6 +1666,8 @@ public class AdCreative extends APINode {
       VALUE_GET_DIRECTIONS("GET_DIRECTIONS"),
       @SerializedName("MESSAGE_PAGE")
       VALUE_MESSAGE_PAGE("MESSAGE_PAGE"),
+      @SerializedName("MESSAGE_USER")
+      VALUE_MESSAGE_USER("MESSAGE_USER"),
       @SerializedName("SUBSCRIBE")
       VALUE_SUBSCRIBE("SUBSCRIBE"),
       @SerializedName("SELL_NOW")
@@ -1612,6 +1684,12 @@ public class AdCreative extends APINode {
       VALUE_VOTE_NOW("VOTE_NOW"),
       @SerializedName("REGISTER_NOW")
       VALUE_REGISTER_NOW("REGISTER_NOW"),
+      @SerializedName("REQUEST_TIME")
+      VALUE_REQUEST_TIME("REQUEST_TIME"),
+      @SerializedName("SEE_MENU")
+      VALUE_SEE_MENU("SEE_MENU"),
+      @SerializedName("EMAIL_NOW")
+      VALUE_EMAIL_NOW("EMAIL_NOW"),
       @SerializedName("OPEN_MOVIES")
       VALUE_OPEN_MOVIES("OPEN_MOVIES"),
       NULL(null);
@@ -1665,7 +1743,7 @@ public class AdCreative extends APINode {
       }
   }
 
-  public static enum EnumRunStatus {
+  public static enum EnumStatus {
       @SerializedName("ACTIVE")
       VALUE_ACTIVE("ACTIVE"),
       @SerializedName("DELETED")
@@ -1674,7 +1752,7 @@ public class AdCreative extends APINode {
 
       private String value;
 
-      private EnumRunStatus(String value) {
+      private EnumStatus(String value) {
         this.value = value;
       }
 
@@ -1737,6 +1815,8 @@ public class AdCreative extends APINode {
   }
 
   public AdCreative copyFrom(AdCreative instance) {
+    this.mAccountId = instance.mAccountId;
+    this.mActorId = instance.mActorId;
     this.mAdlabels = instance.mAdlabels;
     this.mApplinkTreatment = instance.mApplinkTreatment;
     this.mBody = instance.mBody;
@@ -1760,12 +1840,14 @@ public class AdCreative extends APINode {
     this.mObjectUrl = instance.mObjectUrl;
     this.mPlatformCustomizations = instance.mPlatformCustomizations;
     this.mProductSetId = instance.mProductSetId;
-    this.mRunStatus = instance.mRunStatus;
+    this.mStatus = instance.mStatus;
     this.mTemplateUrl = instance.mTemplateUrl;
+    this.mTemplateUrlSpec = instance.mTemplateUrlSpec;
     this.mThumbnailUrl = instance.mThumbnailUrl;
     this.mTitle = instance.mTitle;
     this.mUrlTags = instance.mUrlTags;
     this.mUsePageActorOverride = instance.mUsePageActorOverride;
+    this.mVideoId = instance.mVideoId;
     this.mCreativeId = this.mId;
     this.context = instance.context;
     this.rawValue = instance.rawValue;

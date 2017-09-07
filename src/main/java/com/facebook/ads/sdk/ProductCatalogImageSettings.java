@@ -50,27 +50,25 @@ import com.facebook.ads.sdk.APIException.MalformedResponseException;
  * pull request for this class.
  *
  */
-public class AdAccountGroupResult extends APINode {
-  @SerializedName("account_group_id")
-  private String mAccountGroupId = null;
-  @SerializedName("name")
-  private String mName = null;
-  @SerializedName("status")
-  private Long mStatus = null;
+public class ProductCatalogImageSettings extends APINode {
+  @SerializedName("carousel_ad")
+  private ProductCatalogImageSettingsOperation mCarouselAd = null;
+  @SerializedName("single_ad")
+  private ProductCatalogImageSettingsOperation mSingleAd = null;
   protected static Gson gson = null;
 
-  public AdAccountGroupResult() {
+  public ProductCatalogImageSettings() {
   }
 
   public String getId() {
     return null;
   }
-  public static AdAccountGroupResult loadJSON(String json, APIContext context) {
-    AdAccountGroupResult adAccountGroupResult = getGson().fromJson(json, AdAccountGroupResult.class);
+  public static ProductCatalogImageSettings loadJSON(String json, APIContext context) {
+    ProductCatalogImageSettings productCatalogImageSettings = getGson().fromJson(json, ProductCatalogImageSettings.class);
     if (context.isDebug()) {
       JsonParser parser = new JsonParser();
       JsonElement o1 = parser.parse(json);
-      JsonElement o2 = parser.parse(adAccountGroupResult.toString());
+      JsonElement o2 = parser.parse(productCatalogImageSettings.toString());
       if (o1.getAsJsonObject().get("__fb_trace_id__") != null) {
         o2.getAsJsonObject().add("__fb_trace_id__", o1.getAsJsonObject().get("__fb_trace_id__"));
       }
@@ -80,13 +78,13 @@ public class AdAccountGroupResult extends APINode {
         context.log("[Object]" + o2);
       };
     }
-    adAccountGroupResult.context = context;
-    adAccountGroupResult.rawValue = json;
-    return adAccountGroupResult;
+    productCatalogImageSettings.context = context;
+    productCatalogImageSettings.rawValue = json;
+    return productCatalogImageSettings;
   }
 
-  public static APINodeList<AdAccountGroupResult> parseResponse(String json, APIContext context, APIRequest request) throws MalformedResponseException {
-    APINodeList<AdAccountGroupResult> adAccountGroupResults = new APINodeList<AdAccountGroupResult>(request, json);
+  public static APINodeList<ProductCatalogImageSettings> parseResponse(String json, APIContext context, APIRequest request) throws MalformedResponseException {
+    APINodeList<ProductCatalogImageSettings> productCatalogImageSettingss = new APINodeList<ProductCatalogImageSettings>(request, json);
     JsonArray arr;
     JsonObject obj;
     JsonParser parser = new JsonParser();
@@ -97,9 +95,9 @@ public class AdAccountGroupResult extends APINode {
         // First, check if it's a pure JSON Array
         arr = result.getAsJsonArray();
         for (int i = 0; i < arr.size(); i++) {
-          adAccountGroupResults.add(loadJSON(arr.get(i).getAsJsonObject().toString(), context));
+          productCatalogImageSettingss.add(loadJSON(arr.get(i).getAsJsonObject().toString(), context));
         };
-        return adAccountGroupResults;
+        return productCatalogImageSettingss;
       } else if (result.isJsonObject()) {
         obj = result.getAsJsonObject();
         if (obj.has("data")) {
@@ -107,13 +105,13 @@ public class AdAccountGroupResult extends APINode {
             JsonObject paging = obj.get("paging").getAsJsonObject().get("cursors").getAsJsonObject();
             String before = paging.has("before") ? paging.get("before").getAsString() : null;
             String after = paging.has("after") ? paging.get("after").getAsString() : null;
-            adAccountGroupResults.setPaging(before, after);
+            productCatalogImageSettingss.setPaging(before, after);
           }
           if (obj.get("data").isJsonArray()) {
             // Second, check if it's a JSON array with "data"
             arr = obj.get("data").getAsJsonArray();
             for (int i = 0; i < arr.size(); i++) {
-              adAccountGroupResults.add(loadJSON(arr.get(i).getAsJsonObject().toString(), context));
+              productCatalogImageSettingss.add(loadJSON(arr.get(i).getAsJsonObject().toString(), context));
             };
           } else if (obj.get("data").isJsonObject()) {
             // Third, check if it's a JSON object with "data"
@@ -124,23 +122,23 @@ public class AdAccountGroupResult extends APINode {
                 isRedownload = true;
                 obj = obj.getAsJsonObject(s);
                 for (Map.Entry<String, JsonElement> entry : obj.entrySet()) {
-                  adAccountGroupResults.add(loadJSON(entry.getValue().toString(), context));
+                  productCatalogImageSettingss.add(loadJSON(entry.getValue().toString(), context));
                 }
                 break;
               }
             }
             if (!isRedownload) {
-              adAccountGroupResults.add(loadJSON(obj.toString(), context));
+              productCatalogImageSettingss.add(loadJSON(obj.toString(), context));
             }
           }
-          return adAccountGroupResults;
+          return productCatalogImageSettingss;
         } else if (obj.has("images")) {
           // Fourth, check if it's a map of image objects
           obj = obj.get("images").getAsJsonObject();
           for (Map.Entry<String, JsonElement> entry : obj.entrySet()) {
-              adAccountGroupResults.add(loadJSON(entry.getValue().toString(), context));
+              productCatalogImageSettingss.add(loadJSON(entry.getValue().toString(), context));
           }
-          return adAccountGroupResults;
+          return productCatalogImageSettingss;
         } else {
           // Fifth, check if it's an array of objects indexed by id
           boolean isIdIndexedArray = true;
@@ -157,20 +155,20 @@ public class AdAccountGroupResult extends APINode {
               value.getAsJsonObject().get("id") != null &&
               value.getAsJsonObject().get("id").getAsString().equals(key)
             ) {
-              adAccountGroupResults.add(loadJSON(value.toString(), context));
+              productCatalogImageSettingss.add(loadJSON(value.toString(), context));
             } else {
               isIdIndexedArray = false;
               break;
             }
           }
           if (isIdIndexedArray) {
-            return adAccountGroupResults;
+            return productCatalogImageSettingss;
           }
 
           // Sixth, check if it's pure JsonObject
-          adAccountGroupResults.clear();
-          adAccountGroupResults.add(loadJSON(json, context));
-          return adAccountGroupResults;
+          productCatalogImageSettingss.clear();
+          productCatalogImageSettingss.add(loadJSON(json, context));
+          return productCatalogImageSettingss;
         }
       }
     } catch (Exception e) {
@@ -198,33 +196,34 @@ public class AdAccountGroupResult extends APINode {
   }
 
 
-  public String getFieldAccountGroupId() {
-    return mAccountGroupId;
+  public ProductCatalogImageSettingsOperation getFieldCarouselAd() {
+    return mCarouselAd;
   }
 
-  public AdAccountGroupResult setFieldAccountGroupId(String value) {
-    this.mAccountGroupId = value;
+  public ProductCatalogImageSettings setFieldCarouselAd(ProductCatalogImageSettingsOperation value) {
+    this.mCarouselAd = value;
     return this;
   }
 
-  public String getFieldName() {
-    return mName;
+  public ProductCatalogImageSettings setFieldCarouselAd(String value) {
+    Type type = new TypeToken<ProductCatalogImageSettingsOperation>(){}.getType();
+    this.mCarouselAd = ProductCatalogImageSettingsOperation.getGson().fromJson(value, type);
+    return this;
+  }
+  public ProductCatalogImageSettingsOperation getFieldSingleAd() {
+    return mSingleAd;
   }
 
-  public AdAccountGroupResult setFieldName(String value) {
-    this.mName = value;
+  public ProductCatalogImageSettings setFieldSingleAd(ProductCatalogImageSettingsOperation value) {
+    this.mSingleAd = value;
     return this;
   }
 
-  public Long getFieldStatus() {
-    return mStatus;
-  }
-
-  public AdAccountGroupResult setFieldStatus(Long value) {
-    this.mStatus = value;
+  public ProductCatalogImageSettings setFieldSingleAd(String value) {
+    Type type = new TypeToken<ProductCatalogImageSettingsOperation>(){}.getType();
+    this.mSingleAd = ProductCatalogImageSettingsOperation.getGson().fromJson(value, type);
     return this;
   }
-
 
 
 
@@ -241,19 +240,18 @@ public class AdAccountGroupResult extends APINode {
     return gson;
   }
 
-  public AdAccountGroupResult copyFrom(AdAccountGroupResult instance) {
-    this.mAccountGroupId = instance.mAccountGroupId;
-    this.mName = instance.mName;
-    this.mStatus = instance.mStatus;
+  public ProductCatalogImageSettings copyFrom(ProductCatalogImageSettings instance) {
+    this.mCarouselAd = instance.mCarouselAd;
+    this.mSingleAd = instance.mSingleAd;
     this.context = instance.context;
     this.rawValue = instance.rawValue;
     return this;
   }
 
-  public static APIRequest.ResponseParser<AdAccountGroupResult> getParser() {
-    return new APIRequest.ResponseParser<AdAccountGroupResult>() {
-      public APINodeList<AdAccountGroupResult> parseResponse(String response, APIContext context, APIRequest<AdAccountGroupResult> request) throws MalformedResponseException {
-        return AdAccountGroupResult.parseResponse(response, context, request);
+  public static APIRequest.ResponseParser<ProductCatalogImageSettings> getParser() {
+    return new APIRequest.ResponseParser<ProductCatalogImageSettings>() {
+      public APINodeList<ProductCatalogImageSettings> parseResponse(String response, APIContext context, APIRequest<ProductCatalogImageSettings> request) throws MalformedResponseException {
+        return ProductCatalogImageSettings.parseResponse(response, context, request);
       }
     };
   }

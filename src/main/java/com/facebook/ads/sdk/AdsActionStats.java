@@ -63,6 +63,8 @@ public class AdsActionStats extends APINode {
   private String m7dClick = null;
   @SerializedName("7d_view")
   private String m7dView = null;
+  @SerializedName("action_canvas_component_name")
+  private String mActionCanvasComponentName = null;
   @SerializedName("action_carousel_card_id")
   private String mActionCarouselCardId = null;
   @SerializedName("action_carousel_card_name")
@@ -71,6 +73,8 @@ public class AdsActionStats extends APINode {
   private String mActionDestination = null;
   @SerializedName("action_device")
   private String mActionDevice = null;
+  @SerializedName("action_link_click_destination")
+  private String mActionLinkClickDestination = null;
   @SerializedName("action_reaction")
   private String mActionReaction = null;
   @SerializedName("action_target_id")
@@ -278,6 +282,15 @@ public class AdsActionStats extends APINode {
     return this;
   }
 
+  public String getFieldActionCanvasComponentName() {
+    return mActionCanvasComponentName;
+  }
+
+  public AdsActionStats setFieldActionCanvasComponentName(String value) {
+    this.mActionCanvasComponentName = value;
+    return this;
+  }
+
   public String getFieldActionCarouselCardId() {
     return mActionCarouselCardId;
   }
@@ -311,6 +324,15 @@ public class AdsActionStats extends APINode {
 
   public AdsActionStats setFieldActionDevice(String value) {
     this.mActionDevice = value;
+    return this;
+  }
+
+  public String getFieldActionLinkClickDestination() {
+    return mActionLinkClickDestination;
+  }
+
+  public AdsActionStats setFieldActionLinkClickDestination(String value) {
+    this.mActionLinkClickDestination = value;
     return this;
   }
 
@@ -391,10 +413,12 @@ public class AdsActionStats extends APINode {
     this.m28dView = instance.m28dView;
     this.m7dClick = instance.m7dClick;
     this.m7dView = instance.m7dView;
+    this.mActionCanvasComponentName = instance.mActionCanvasComponentName;
     this.mActionCarouselCardId = instance.mActionCarouselCardId;
     this.mActionCarouselCardName = instance.mActionCarouselCardName;
     this.mActionDestination = instance.mActionDestination;
     this.mActionDevice = instance.mActionDevice;
+    this.mActionLinkClickDestination = instance.mActionLinkClickDestination;
     this.mActionReaction = instance.mActionReaction;
     this.mActionTargetId = instance.mActionTargetId;
     this.mActionType = instance.mActionType;
